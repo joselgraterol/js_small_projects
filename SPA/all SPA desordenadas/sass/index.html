@@ -1,0 +1,174 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My SPA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="#home" class="navigation-item">Home</a></li>
+      <li><a href="#about" class="navigation-item">About</a></li>
+      <li><a href="#contact" class="navigation-item">Contact</a></li>
+      <li><a href="#products" class="navigation-item">Products</a></li>
+      <ul>
+        <li><a href="#products/electronics">Electronics</a></li>
+        <li><a href="#products/clothing">Clothing</a></li>
+      </ul>
+    </ul>
+  </nav>
+  
+  <p>
+  what if I want to have the logic of every single page in different files?
+
+If you want to separate the logic of each page into different files, you can use a module-based approach. Here's an example of how you can organize your code:
+
+// home.js
+export function renderHomePage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>Welcome to the Home Page</h1>';
+}
+
+// about.js
+export function renderAboutPage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>About Us</h1><p>We are a company that...</p>';
+}
+
+// contact.js
+export function renderContactPage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>Contact Us</h1><p>Email: info@example.com</p>';
+}
+
+// products.js
+export function renderProductsPage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>Our Products</h1><p>Check out our amazing products...</p>';
+}
+
+// electronics.js
+export function renderElectronicsPage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>Electronics</h1><p>We offer a wide range of electronic devices...</p>';
+}
+
+// clothing.js
+export function renderClothingPage() {
+  const content = document.getElementById('content');
+  content.innerHTML = '<h1>Clothing</h1><p>Discover the latest fashion trends...</p>';
+}
+
+// app.js
+import * as homePage from './home.js';
+import * as aboutPage from './about.js';
+import * as contactPage from './contact.js';
+import * as productsPage from './products.js';
+import * as electronicsPage from './electronics.js';
+import * as clothingPage from './clothing.js';
+
+function handleRoute(route) {
+  const content = document.getElementById('content');
+
+  // Add the fade-out class to initiate the animation
+  content.classList.add('fade-out');
+
+  // Wait for the animation to complete
+  setTimeout(() => {
+    switch (route) {
+      case '#home':
+        homePage.renderHomePage();
+        break;
+      case '#about':
+        aboutPage.renderAboutPage();
+        break;
+      case '#contact':
+        contactPage.renderContactPage();
+        break;
+      case '#products':
+        productsPage.renderProductsPage();
+        break;
+      case '#products/electronics':
+        electronicsPage.renderElectronicsPage();
+        break;
+      case '#products/clothing':
+        clothingPage.renderClothingPage();
+        break;
+      default:
+        content.innerHTML = '<h1>Page Not Found</h1>';
+    }
+
+    // Remove the fade-out class and add the fade-in class to trigger the animation
+    content.classList.remove('fade-out');
+    content.classList.add('fade-in');
+  }, 300); // Wait for the fade-out animation to complete (300ms)
+}
+
+function handleRouteChange() {
+  const currentRoute = window.location.hash;
+
+  // If no route is specified (first time page load), default to '#home'
+  const route = currentRoute ? currentRoute : '#home';
+
+  handleRoute(route);
+}
+
+// Attach event listener to the hashchange event
+window.addEventListener('hashchange', handleRouteChange);
+
+// Initial page load
+handleRouteChange();
+
+
+
+In this updated code, each page has its own JavaScript file (home.js, about.js, contact.js, etc.). Each file exports a function that is responsible for rendering the content of that specific page. In the app.js file, we import these functions using the import statement.
+
+When a route changes, the corresponding function is called to render the content of the page. This separation of logic allows you to organize and maintain the code for each page separately.
+
+Make sure to update your HTML file to include the individual JavaScript files:
+
+<!-- <script src="home.js" type="module"></script>
+  <script src="about.js" type="module"></script>
+  <script src="contact.js" type="module"></script>
+  <script src="products.js" type="module"></script>
+  <script src="electronics.js" type="module"></script>
+  <script src="clothing.js" type="module"></script>
+  <script src="app.js" type="module"></script> -->
+  
+  
+  <!-- In this example, the JavaScript files for each page (home.js, about.js, contact.js, etc.) are included at the bottom of the HTML file using the <script> tag. The type="module" attribute is added to indicate that these are ES modules.
+
+Make sure that the file paths in the <script> tags match the actual file names and locations.
+
+With this organization, each page's logic is contained in its own separate file, allowing for better code organization and maintainability.
+
+Let me know if you have any further questions! -->
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </p>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <div id="content">
+    <!-- Content will be dynamically updated here -->
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+this is a basic SPA with: 
+-smooth transitions between the pages
+-active links when clicking
+- when clickin sub-links the parent link remains clicked
